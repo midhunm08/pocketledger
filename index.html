@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KODIAK Borrowing Cost Engine</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div class="eyebrow">KODIAK • FINANCIAL LEARNING LAB</div>
+      <h1>Borrowing Cost Engine</h1>
+      <p>Ind AS 23 · ICDS IX · Corporate learning simulation</p>
+      <div class="company"><strong>Malabar Spices Limited</strong><span>Illustrative company · FY 2026–27 · Amounts in ₹ lakh</span></div>
+    </header>
+
+    <nav class="tabs" aria-label="Application sections">
+      <button class="tab active" data-tab="learn">01 · Learn</button>
+      <button class="tab" data-tab="inputs">02 · Inputs</button>
+      <button class="tab" data-tab="indas">03 · Ind AS 23</button>
+      <button class="tab" data-tab="icds">04 · ICDS IX</button>
+      <button class="tab" data-tab="reconcile">05 · Reconcile</button>
+    </nav>
+
+    <section id="learn" class="page">
+      <div class="card">
+        <h2>What are we calculating?</h2>
+        <p>A company borrows money to construct factories, install machinery and manufacture certain inventories. Some borrowing costs may be included in the cost of qualifying assets instead of being charged immediately to the Statement of Profit and Loss.</p>
+        <div class="callout"><b>The central question</b><br>Which borrowing costs relate to qualifying assets, for what period, and how much can be capitalised under each framework?</div>
+      </div>
+      <div class="card">
+        <h2>Two separate frameworks</h2>
+        <h3>Ind AS 23 — Financial reporting</h3>
+        <p>Determines borrowing costs included in the carrying amount of qualifying assets in financial statements.</p>
+        <h3>ICDS IX — Tax computation</h3>
+        <p>Determines borrowing costs included in actual cost for tax computation. ICDS IX is not a second set of book journal entries.</p>
+      </div>
+      <div class="card">
+        <h2>Learning sequence</h2>
+        <ol>
+          <li>Identify borrowings and calculate borrowing costs.</li>
+          <li>Identify qualifying assets and eligible periods.</li>
+          <li>Calculate specific and general borrowing costs under Ind AS 23.</li>
+          <li>Calculate the ICDS IX general borrowing allocation separately.</li>
+          <li>Reconcile the two outputs and understand the differences.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2>Important concepts</h2>
+        <p><b>Qualifying asset:</b> Under Ind AS 23, an asset that necessarily takes a substantial period of time to get ready for its intended use or sale.</p>
+        <p><b>Specific borrowing:</b> Borrowing obtained specifically to finance a qualifying asset.</p>
+        <p><b>General borrowing:</b> Borrowing not obtained specifically for a qualifying asset.</p>
+        <p><b>CWIP:</b> Accumulated cost of an asset under construction. CWIP status alone does not prove that borrowing cost capitalisation is appropriate.</p>
+      </div>
+      <button class="primary" data-go="inputs">Start entering company data →</button>
+    </section>
+
+    <section id="inputs" class="page hidden">
+      <div class="card">
+        <h2>A. General borrowings</h2>
+        <p class="muted">For this starter version, balances are assumed constant throughout the year. Enter average outstanding balances and annual rates.</p>
+        <div id="loan-list"></div>
+        <button id="add-loan">+ Add general borrowing</button>
+        <div class="callout"><b>Why do we need this?</b><br>Ind AS 23 uses a weighted average capitalisation rate for general borrowings. In a real computation, the pool must exclude specific borrowings and reflect actual outstanding periods and eligible borrowing costs.</div>
+      </div>
+      <div class="card">
+        <h2>B. Specific borrowing</h2>
+        <div class="form-grid">
+          <label>Specific loan amount (₹ lakh)<input id="specific-amount" type="number" min="0" value="2000"></label>
+          <label>Annual interest rate (%)<input id="specific-rate" type="number" min="0" step=".01" value="9.5"></label>
+          <label>Eligible borrowing period (months)<input id="specific-months" type="number" min="0" max="12" value="8"></label>
+          <label>Temporary investment income (₹ lakh)<input id="investment-income" type="number" min="0" value="8"></label>
+        </div>
+        <div class="callout"><b>Teaching point</b><br>Under Ind AS 23, eligible specific borrowing costs are actual borrowing costs incurred during the eligible period, less income earned from temporary investment of those borrowings. ICDS IX must be considered separately.</div>
+      </div>
+      <div class="card">
+        <h2>C. Other borrowing costs</h2>
+        <div class="form-grid">
+          <label>Other eligible general borrowing costs (₹ lakh)<input id="other-costs" type="number" min="0" value="10"></label>
+          <label>General borrowing costs excluded for tax (₹ lakh)<input id="tax-excluded" type="number" min="0" value="0"></label>
+        </div>
+        <p class="muted small">Examples may include eligible ancillary costs and amortisation of discounts or premiums, subject to the relevant standard, ICDS and evidence. Do not classify every bank charge automatically as an eligible borrowing cost.</p>
+      </div>
+      <div class="card">
+        <h2>D. Project and asset inputs</h2>
+        <div class="form-grid">
+          <label>Qualifying project expenditure (₹ lakh)<input id="project-expenditure" type="number" min="0" value="300"></label>
+          <label>Eligible expenditure period (months)<input id="project-months" type="number" min="0" max="12" value="8"></label>
+          <label>ICDS average cost of qualifying assets (₹ lakh)<input id="average-qualifying" type="number" min="0" value="300"></label>
+          <label>ICDS average cost of total assets (₹ lakh)<input id="average-total" type="number" min="0" value="5000"></label>
+        </div>
+        <div class="callout"><b>Why are these separate?</b><br>Ind AS general borrowing calculation applies a capitalisation rate to time-weighted qualifying expenditure. ICDS IX uses its prescribed average-cost ratio. The ICDS figures must ultimately be built from asset-level opening/closing costs and put-to-use dates.</div>
+      </div>
+      <button class="primary" id="calculate">Calculate both frameworks →</button>
+    </section>
+
+    <section id="indas" class="page hidden">
+      <div class="card"><h2>Ind AS 23 result</h2><div id="indas-output" class="muted">Enter inputs and calculate first.</div></div>
+      <div class="card"><h2>How the calculation is derived</h2><div id="indas-teaching" class="muted">The steps will appear here.</div></div>
+      <div class="card">
+        <h2>Audit challenge checklist</h2>
+        <ul>
+          <li>Is the asset genuinely a qualifying asset?</li>
+          <li>Have all three commencement conditions been met?</li>
+          <li>Are specific and general borrowings classified correctly?</li>
+          <li>Are specific borrowings excluded from the general pool?</li>
+          <li>Have extended interruptions been considered?</li>
+          <li>Has capitalisation ceased when substantially all preparation activities are complete?</li>
+          <li>Is capitalisation within the borrowing costs actually incurred?</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="icds" class="page hidden">
+      <div class="card"><h2>ICDS IX result</h2><div id="icds-output" class="muted">Enter inputs and calculate first.</div></div>
+      <div class="card"><h2>How the calculation is derived</h2><div id="icds-teaching" class="muted">The steps will appear here.</div></div>
+      <div class="card">
+        <h2>Important ICDS distinctions</h2>
+        <ul>
+          <li>ICDS IX has its own qualifying-asset definitions, including specified tangible and intangible assets and certain inventories requiring at least 12 months to reach saleable condition.</li>
+          <li>Specific borrowing costs and general borrowing costs follow different allocation rules.</li>
+          <li>General borrowing costs use the prescribed average-cost ratio, not the Ind AS weighted-expenditure method.</li>
+          <li>Asset-by-asset tracing and put-to-use/completion dates are essential.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="reconcile" class="page hidden">
+      <div class="card"><h2>Framework reconciliation</h2><div id="reconcile-output" class="muted">Calculate first to see the reconciliation.</div></div>
+      <div class="card"><h2>Why can the numbers differ?</h2><div id="reconcile-teaching" class="muted">The reconciliation explanation will appear here.</div></div>
+      <div class="callout"><b>Accounting versus tax</b><br>ICDS IX is used for computing taxable income. It does not itself create a book journal entry. Differences may affect tax depreciation, tax actual cost and deferred tax analysis under Ind AS 12, as applicable.</div>
+    </section>
+
+    <footer>Educational prototype · Illustrative data · Not a statutory computation or audit sign-off</footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
